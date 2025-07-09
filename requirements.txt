@@ -1,3 +1,4 @@
 flask
 openai-whisper
 yt-dlp
+PyPDF2
