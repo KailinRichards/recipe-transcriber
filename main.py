@@ -59,4 +59,9 @@ def transcribe():
     except FileNotFoundError as e:
         return jsonify({"error": str(e)}), 500
     finally:
-        if os.path.exi
+    if os.path.exists(video_filename):
+        os.remove(video_filename)
+
+    transcript_txt = video_filename.replace(".mp4", ".txt")
+    if os.path.exists(transcript_txt):
+        os.remove(transcript_txt)
