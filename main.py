@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify
 import subprocess
 import os
 import uuid
-from PyPDF2 import PdfReader  # <- NEW
-from flask_cors import CORS  # <- For CORS
+from PyPDF2 import PdfReader
+from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS
@@ -59,9 +59,9 @@ def transcribe():
     except FileNotFoundError as e:
         return jsonify({"error": str(e)}), 500
     finally:
-    if os.path.exists(video_filename):
-        os.remove(video_filename)
+        if os.path.exists(video_filename):
+            os.remove(video_filename)
 
-    transcript_txt = video_filename.replace(".mp4", ".txt")
-    if os.path.exists(transcript_txt):
-        os.remove(transcript_txt)
+        transcript_txt = video_filename.replace(".mp4", ".txt")
+        if os.path.exists(transcript_txt):
+            os.remove(transcript_txt)
