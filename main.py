@@ -6,15 +6,14 @@ from PyPDF2 import PdfReader
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS
+CORS(app)
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe():
-    # Try JSON payload for URL
     data = request.get_json(silent=True)
     url = data.get("url") if data else None
 
-    # Handle PDF file upload
+    # Handle PDF upload
     if 'file' in request.files:
         pdf = request.files['file']
         try:
@@ -28,7 +27,7 @@ def transcribe():
         except Exception as e:
             return jsonify({"error": f"Failed to read PDF: {str(e)}"}), 500
 
-    # Error if no URL or PDF provided
+    # If no URL or file provided
     if not url:
         return jsonify({"error": "Missing URL or file"}), 400
 
@@ -65,3 +64,7 @@ def transcribe():
         transcript_txt = video_filename.replace(".mp4", ".txt")
         if os.path.exists(transcript_txt):
             os.remove(transcript_txt)
+
+# 🧠 THIS is the line Render needs to hear
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000)
